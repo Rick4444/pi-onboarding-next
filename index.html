@@ -21,7 +21,7 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title data-i18n="meta.title">Client Onboarding | Paytm Intelligence</title>
 <meta name="description" data-i18n-attr="content:meta.description" content="Onboard to Paytm Intelligence on WhatsApp, SMS or RCS. Complete the form for your channel and our team will get back to you.">
-<meta name="theme-color" content="#f1f6ff">
+<meta name="theme-color" content="#001f5c">
 <meta property="og:type" content="website">
 <meta property="og:title" data-i18n-attr="content:meta.title" content="Client Onboarding | Paytm Intelligence">
 <meta property="og:description" data-i18n-attr="content:meta.ogDescription" content="Complete the onboarding questionnaire for WhatsApp, SMS or RCS.">
@@ -29,10 +29,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=n2">
-<script src="config.js?v=n2" defer></script>
-<script src="messages.js?v=n2" defer></script>
-<script src="app.js?v=n2" defer></script>
+<link rel="stylesheet" href="styles.css?v=n3">
+<script src="config.js?v=n3" defer></script>
+<script src="messages.js?v=n3" defer></script>
+<script src="app.js?v=n3" defer></script>
 </head>
 <body>
 <!-- Connection banner: shown by app.js when the device goes offline, comes back, or the network is slow. Text is filled from messages.js. -->
@@ -41,22 +41,20 @@
 <a class="skip" href="#main" data-i18n="skip"></a>
 <!-- Sticky progress bar: appears after the customer scrolls past the header; chips are built by app.js (paint) -->
 <nav class="sbar" id="sbar" data-i18n-attr="aria-label:prog.title" aria-hidden="true"><div class="wrap sb-in"><span class="sb-t" data-i18n="prog.title"></span><ul class="sb-chips" id="sb-chips"></ul><span class="sb-pct" id="sb-pct"></span></div><i class="sb-m"><i id="sb-bar"></i></i></nav>
-<!-- Header: logo, channel menu, language switcher (added by app.js), welcome text and the animated Pi graphic -->
-<div class="band">
- <div class="wrap bar">
-  <!-- Logo links to the Pi website. Opens in a new tab so a customer never loses the form they are filling. Change the address here. -->
-  <a class="logo" id="logo" href="https://pi.global/" target="_blank" rel="noopener" data-i18n-attr="aria-label:logo.alt"><span class="pi">Pi</span><span class="by"><span data-i18n="logo.by"></span> <b>PAYTM</b></span></a>
-  <div class="bar-r"><nav class="tn" data-i18n-attr="aria-label:nav.label"><button type="button" data-k="whatsapp" data-i18n="tab.whatsapp"></button><button type="button" data-k="sms" data-i18n="tab.sms"></button><button type="button" data-k="rcs" data-i18n="tab.rcs"></button></nav><span id="langhost"></span></div>
- </div>
- <div class="wrap g">
- <div class="intro">
-  <span class="live"><i></i><span data-i18n="intro.live"></span></span>
-  <h1 data-i18n="intro.title"></h1>
-  <p data-i18n="intro.text"></p>
-  <!-- Three-step strip: app.js marks each step done / current as the customer progresses -->
-  <ol class="hsteps" id="hsteps"><li><span data-i18n="intro.s1"></span></li><li><span data-i18n="intro.s2"></span></li><li><span data-i18n="intro.s3"></span></li></ol>
-  <p class="eta" data-i18n="intro.eta"></p>
- </div>
+<!-- Split-screen layout. Left: fixed brand rail (logo, welcome, steps, progress, animated Pi graphic). Right: the forms. -->
+<div class="shell">
+<header class="rail" id="rail">
+ <!-- Logo links to the Pi website. Opens in a new tab so a customer never loses the form they are filling. Change the address here. -->
+ <a class="logo" id="logo" href="https://pi.global/" target="_blank" rel="noopener" data-i18n-attr="aria-label:logo.alt"><span class="pi">Pi</span><span class="by"><span data-i18n="logo.by"></span> <b>PAYTM</b></span></a>
+ <h1 data-i18n="intro.title"></h1>
+ <p class="lead" data-i18n="intro.text"></p>
+ <!-- Three-step list: app.js marks each step done / current as the customer progresses -->
+ <ol class="hsteps" id="hsteps">
+  <li><b aria-hidden="true"></b><span><strong data-i18n="intro.s1"></strong><small data-i18n="next.1.text"></small></span></li>
+  <li><b aria-hidden="true"></b><span><strong data-i18n="intro.s2"></strong><small data-i18n="next.2.text"></small></span></li>
+  <li><b aria-hidden="true"></b><span><strong data-i18n="intro.s3"></strong><small data-i18n="next.3.text"></small></span></li>
+ </ol>
+ <div class="rprog"><h4 data-i18n="prog.title"></h4><div class="meter" role="progressbar" data-i18n-attr="aria-label:prog.meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter"><i id="bar"></i></div><p class="count" id="count" aria-live="polite"></p><ul class="chk" id="chk"></ul></div>
  <div class="art" aria-hidden="true">
   <svg class="scene" viewBox="0 0 320 320" focusable="false">
    <defs><radialGradient id="cg" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#d9f7ff"/><stop offset=".45" stop-color="#00b9f5"/><stop offset="1" stop-color="#1d5fd0"/></radialGradient><radialGradient id="bgc" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#00b9f5" stop-opacity=".22"/><stop offset=".7" stop-color="#0a4aa6" stop-opacity=".12"/><stop offset="1" stop-color="#ffffff" stop-opacity=".04"/></radialGradient></defs>
@@ -71,7 +69,10 @@
    <circle class="sp" cx="125" cy="42" r="2.5"/><circle class="sp s2" cx="52" cy="160" r="2"/><circle class="sp s3" cx="268" cy="160" r="2.5"/><circle class="sp s4" cx="200" cy="282" r="2"/>
   </svg>
  </div>
-</div></div>
+ <p class="rhelp" data-i18n="footer.help"></p>
+</header>
+<div class="stage">
+ <div class="topbar"><span class="live"><i></i><span data-i18n="intro.live"></span></span><span class="eta" data-i18n="intro.eta"></span><span id="langhost"></span></div>
 
 <!-- Main area: step 1 business form (built by app.js), step 2 channel tabs and forms, and the progress side panel -->
 <main id="main"><div class="wrap">
@@ -82,14 +83,11 @@
    <div class="tabs locked" role="tablist" data-i18n-attr="aria-label:tabs.label" id="tabs"><span class="tab-sk"></span><span class="tab-sk"></span><span class="tab-sk"></span></div>
    <div class="card" id="panels"><div class="lock" id="lock"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg><h3 data-i18n="lock.title"></h3><p data-i18n="lock.text"></p></div></div>
   </div>
-  <aside data-i18n-attr="aria-label:aside.label">
-   <div class="card prog"><h4 data-i18n="prog.title"></h4><div class="meter" role="progressbar" data-i18n-attr="aria-label:prog.meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter"><i id="bar"></i></div><p class="count" id="count" aria-live="polite"></p><ul class="chk hm" id="chk" style="margin-top:16px"></ul></div>
-   <div class="card hm"><h4 data-i18n="next.title"></h4><ol class="flow"><li><b data-i18n="next.1.title"></b><span data-i18n="next.1.text"></span></li><li><b data-i18n="next.2.title"></b><span data-i18n="next.2.text"></span></li><li><b data-i18n="next.3.title"></b><span data-i18n="next.3.text"></span></li></ol></div>
-  </aside>
  </div>
 </div></main>
 
-<footer><div class="wrap"><span data-i18n="footer.copy"></span><span data-i18n="footer.help"></span></div></footer>
+<footer><div class="wrap"><span data-i18n="footer.copy"></span></div></footer>
+</div></div>
 
 <!-- Dialogs. Welcome shows once per browser; busy overlay covers submission; the others confirm actions. -->
 <dialog id="welcome" aria-labelledby="wt"><div class="dlg wl">
