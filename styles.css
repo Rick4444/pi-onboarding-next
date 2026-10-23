@@ -656,7 +656,7 @@ footer .wrap{padding-inline:clamp(20px,4.4vw,64px);max-width:1020px;margin:0}
 .net{max-width:760px}
 
 /* sticky mini progress bar: only needed when the rail is not on screen */
-@media (min-width:1001px){.sbar{display:none}}
+@media (min-width:821px){.sbar{display:none}}
 
 /* entrance animations (CSS only, skipped for reduced motion) */
 .rail .logo,.rail h1,.rail .lead,.hsteps li,.rprog,.rail .art,.rail .rhelp{opacity:0;transform:translateY(16px);animation:rise2 .7s cubic-bezier(.2,.8,.2,1) forwards}
@@ -666,26 +666,6 @@ footer .wrap{padding-inline:clamp(20px,4.4vw,64px);max-width:1020px;margin:0}
 @media (prefers-reduced-motion:reduce){.rail::before,.rail::after,.hsteps li.cur b,.topbar .live i{animation:none}.rail .logo,.rail h1,.rail .lead,.hsteps li,.rprog,.rail .art,.rail .rhelp{opacity:1;transform:none;animation:none}}
 
 /* ---------- Tablet and phone: rail becomes a compact header ---------- */
-@media (max-width:1000px){
- .shell{display:block}
- .rail{position:relative;height:auto;overflow:hidden;padding:max(22px,env(safe-area-inset-top)) clamp(20px,5vw,40px) 26px}
- .rail h1{margin:22px 0 8px;font-size:clamp(1.65rem,5.4vw,2.2rem)}
- .rail .lead{margin-bottom:20px;max-width:60ch}
- .hsteps{flex-direction:row;gap:8px;flex-wrap:wrap;margin-bottom:16px}
- .hsteps li{padding:0;gap:9px;align-items:center;flex:0 1 auto;padding:7px 14px 7px 8px;border:1px solid rgba(255,255,255,.22);border-radius:99px;background:rgba(255,255,255,.07)}
- .hsteps li::before,.hsteps li::after,.hsteps li.done:not(:last-child)::after{display:none}
- .hsteps li b{width:26px;height:26px;font-size:.78rem}
- .hsteps li strong{margin:0;font:600 .86rem var(--body)}.hsteps li small{display:none}
- .hsteps li.cur{background:#fff;border:1px solid #fff}.hsteps li.cur strong{color:#001f5c}.hsteps li.cur b{background:#001f5c;color:#fff;box-shadow:none;animation:none}
- .hsteps li.done{border:1px solid rgba(34,211,160,.6);background:rgba(255,255,255,.07)}
- .hsteps li small{display:none}
- .rprog{padding:14px 16px}.rprog .chk{display:none}
- .rail .art{display:none}
- .rail .rhelp{display:none}
- .topbar{padding:14px clamp(20px,5vw,40px);flex-wrap:wrap}
- .topbar .eta{text-align:left;flex-basis:100%;order:3}
- .topbar #langhost{margin-left:auto}
- main{padding-top:22px}
 }
 @media (max-width:700px){
  .tabs{grid-template-columns:1fr;gap:10px}
@@ -720,7 +700,6 @@ html{font-size:93.75%}
 .stephead h2{font-size:clamp(1.15rem,1.6vw,1.4rem)}
 .c{min-height:48px}
 .submit{padding:14px 32px}
-@media (max-width:1000px){html{font-size:100%}.rail .lead{font-size:.95rem}.rail h1{font-size:clamp(1.65rem,5.4vw,2.2rem)}.hsteps li b{width:26px;height:26px}}
 
 /* =====================================================================
    v-n5: ONE layout for every device. Nothing here depends on the screen height, so the look is identical
@@ -744,7 +723,6 @@ html{font-size:93.75%}
 .rail .rhelp{margin:26px 0 0;padding-top:0}
 /* keep the brand panel in view while the form scrolls, but only when it fits (never clips) */
 @media (min-height:880px) and (min-width:821px){.rail-in{position:sticky;top:0}}
-@media (max-width:1100px) and (min-width:821px){:root{--rail:330px}.rail-in{padding:30px 28px 24px}.rail h1{font-size:1.65rem}.rail .art{width:min(100%,250px)}.hsteps li small{font-size:.8rem}}
 /* phones and small tablets: panel stacks on top, same content including the animated circle */
 @media (max-width:820px){
  html{font-size:100%}
@@ -784,7 +762,6 @@ html{font-size:93.75%}
  .rail::-webkit-scrollbar{display:none}
  .rail-in{position:relative;top:auto;min-height:100%}
 }
-@media (max-width:1100px) and (min-width:821px){.rail .art{width:min(100%,230px)}.rail h1{font-size:1.55rem}}
 @media (max-width:820px){.hsteps li{align-items:center}.hsteps li:not(:last-child)::before,.hsteps li:not(:last-child)::after{top:36px}}
 @media (min-width:821px){
  .rail-in{padding:26px 34px 20px}
@@ -803,3 +780,23 @@ html{font-size:93.75%}
 /* v-n6: the Pi graphic never waits on an entrance animation, so it is visible the moment the page loads */
 .rail .art{opacity:1!important;transform:none!important;animation:none!important}
 .bld{display:block;margin-top:6px;color:rgba(255,255,255,.35);font-size:.68rem;letter-spacing:.06em}
+
+/* v-n7: tablets (iPad, Surface) share the screen equally: brand panel 50%, form 50%. No stacked mode between 821px and wide screens. */
+@media (min-width:821px) and (max-width:1180px){
+ .shell{grid-template-columns:1fr 1fr}
+ .rail-in{padding:32px 32px 24px}
+ .rail h1{font-size:1.9rem}
+ .rail .art{width:min(100%,300px);margin-top:20px}
+ .topbar{padding:14px 24px}
+ main>.wrap{padding-inline:22px}
+ footer .wrap{padding-inline:22px}
+ .grid{gap:26px 16px}
+ .formhead,.sk{padding-inline:22px}form,.bp{padding-inline:22px}
+}
+/* narrow screens: top bar and form area under the stacked panel */
+@media (max-width:820px){
+ .topbar{padding:14px clamp(20px,5vw,40px);flex-wrap:wrap}
+ .topbar .eta{text-align:left;flex-basis:100%;order:3}
+ .topbar #langhost{margin-left:auto}
+ main{padding-top:22px}
+}
