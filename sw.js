@@ -10,10 +10,11 @@
      so an old copy is never mixed with new code.
    - Everything else (Google Forms, Apps Script, Google Fonts) is NEVER touched. Submissions always go straight to Google.
 
+   NOTE: this is the "next" copy. Its cache names start with "pin-next-" and its browser-storage keys with "pin_", so it never touches the live site.
    RELEASE CHECKLIST: when you publish a new version, change CACHE below to a new name AND the ?v= number in index.html.
    Old caches are deleted automatically.
    ===================================================================== */
-var CACHE = "pi-onboarding-v3.6.1";
+var CACHE = "pin-next-v1";
 var NAV_TIMEOUT_MS = 3500;
 var CORE = ["./", "index.html", "styles.css", "config.js", "messages.js", "app.js"];
 
@@ -30,7 +31,7 @@ self.addEventListener("install", function (e) {
 self.addEventListener("activate", function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
-      return Promise.all(keys.filter(function (k) { return k !== CACHE && k.indexOf("pi-onboarding-") === 0; }).map(function (k) { return caches.delete(k); }));
+      return Promise.all(keys.filter(function (k) { return k !== CACHE && k.indexOf("pin-next-") === 0; }).map(function (k) { return caches.delete(k); }));
     }).then(function () { return self.clients.claim(); })
   );
 });
