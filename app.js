@@ -524,7 +524,7 @@ ORDER.forEach(function(k){var F_=state[k],m=F_.specs.filter(function(s){return!F
  Object.keys(BI_MAP[k]).forEach(function(id){var t=BI_MAP[k][id];if(t!=="emailAddress"&&!F_.map[norm(t)])m.push(t)});
  if(m.length&&!preview&&(CFG.TARGETS||{})[k]!=="sheet")console.warn("[Onboarding] "+k+" form: Google entry IDs missing for "+m.length+" field(s).",m)});
 var t0="whatsapp";try{var sv=localStorage.getItem("pin_onboarding_tab_v1");if(sv&&state[sv])t0=sv}catch(e){}
-select(t0);gate();if(unlocked)setBICollapsed(true,true);
+select(t0);gate();setBICollapsed(true,true);
 
 /* Connection state at load: show the offline banner, or warn when the browser reports a very slow link or data saver. */
 var cn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
