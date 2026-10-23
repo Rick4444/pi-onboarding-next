@@ -29,10 +29,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=n4">
-<script src="config.js?v=n4" defer></script>
-<script src="messages.js?v=n4" defer></script>
-<script src="app.js?v=n4" defer></script>
+<link rel="stylesheet" href="styles.css?v=n5">
+<script src="config.js?v=n5" defer></script>
+<script src="messages.js?v=n5" defer></script>
+<script src="app.js?v=n5" defer></script>
 </head>
 <body>
 <!-- Connection banner: shown by app.js when the device goes offline, comes back, or the network is slow. Text is filled from messages.js. -->
@@ -43,7 +43,7 @@
 <nav class="sbar" id="sbar" data-i18n-attr="aria-label:prog.title" aria-hidden="true"><div class="wrap sb-in"><span class="sb-t" data-i18n="prog.title"></span><ul class="sb-chips" id="sb-chips"></ul><span class="sb-pct" id="sb-pct"></span></div><i class="sb-m"><i id="sb-bar"></i></i></nav>
 <!-- Split-screen layout. Left: fixed brand rail (logo, welcome, steps, progress, animated Pi graphic). Right: the forms. -->
 <div class="shell">
-<header class="rail" id="rail">
+<header class="rail" id="rail"><div class="rail-in">
  <!-- Logo links to the Pi website. Opens in a new tab so a customer never loses the form they are filling. Change the address here. -->
  <a class="logo" id="logo" href="https://pi.global/" target="_blank" rel="noopener" data-i18n-attr="aria-label:logo.alt"><span class="pi">Pi</span><span class="by"><span data-i18n="logo.by"></span> <b>PAYTM</b></span></a>
  <h1 data-i18n="intro.title"></h1>
@@ -70,7 +70,7 @@
   </svg>
  </div>
  <p class="rhelp" data-i18n="footer.help"></p>
-</header>
+</div></header>
 <div class="stage">
  <div class="topbar"><span class="live"><i></i><span data-i18n="intro.live"></span></span><span class="eta" data-i18n="intro.eta"></span><span id="langhost"></span></div>
 
