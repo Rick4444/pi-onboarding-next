@@ -3,7 +3,7 @@
 (function(){
 var M=window.PI_MESSAGES||{},langs=M.languages||{en:{name:"English"}},def=M.defaultLang||"en";
 /* Chooses the language: ?lang= in the link, then the saved choice, then the browser language, then the default. */
-function pick(){var q=(location.search.match(/[?&]lang=([\w-]+)/)||[])[1],s="";try{s=localStorage.getItem("pi_lang_v1")||""}catch(e){}
+function pick(){var q=(location.search.match(/[?&]lang=([\w-]+)/)||[])[1],s="";try{s=localStorage.getItem("pin_lang_v1")||""}catch(e){}
  var nav=(navigator.language||"").toLowerCase().split("-")[0];
  return[q,s,nav].filter(function(l){return l&&M[l]&&langs[l]})[0]||def}
 var lang=pick();
@@ -27,7 +27,7 @@ apply();
 var codes=Object.keys(langs);
 if(codes.length>1){var bar=document.getElementById("langhost");if(bar){var sel=document.createElement("select");sel.className="langsel";sel.setAttribute("aria-label",T("lang.label"));
  codes.forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=langs[c].name||c;if(c===lang)o.selected=true;sel.appendChild(o)});
- sel.addEventListener("change",function(){try{localStorage.setItem("pi_lang_v1",sel.value)}catch(e){}var u=location.pathname+location.search.replace(/([?&])lang=[\w-]+&?/,"$1").replace(/[?&]$/,"")+location.hash;location.href=u});
+ sel.addEventListener("change",function(){try{localStorage.setItem("pin_lang_v1",sel.value)}catch(e){}var u=location.pathname+location.search.replace(/([?&])lang=[\w-]+&?/,"$1").replace(/[?&]$/,"")+location.hash;location.href=u});
  bar.appendChild(sel)}}
 })();
 (function(){
@@ -120,9 +120,9 @@ function check(s,v){
 }
 
 /* ---------- Build UI ---------- */
-var tabs=$("#tabs"),panels=$("#panels"),state={},active="",unlocked=false,confirmed=false,submitted={},BIOK="pi_onboarding_bi_ok_v1";
+var tabs=$("#tabs"),panels=$("#panels"),state={},active="",unlocked=false,confirmed=false,submitted={},BIOK="pin_onboarding_bi_ok_v1";
 try{confirmed=localStorage.getItem(BIOK)==="1"}catch(e){}
-try{submitted=JSON.parse(sessionStorage.getItem("pi_onboarding_done_v1")||"{}")}catch(e){}
+try{submitted=JSON.parse(sessionStorage.getItem("pin_onboarding_done_v1")||"{}")}catch(e){}
 /* Returns the HTML for one question (radio, checkbox, dropdown, text, image link and so on) of form "key". */
 function fieldHTML(key,s){
  var id=key+"-"+s.id,dl=fl(key,s),hh=fh(key,s),
@@ -294,7 +294,7 @@ function gate(){
 }
 /* Switches to a channel tab and remembers the choice. */
 function select(key){
- active=key;try{localStorage.setItem("pi_onboarding_tab_v1",key)}catch(e){}$$(".tn button").forEach(function(b){b.setAttribute("aria-current",b.dataset.k===key)});
+ active=key;try{localStorage.setItem("pin_onboarding_tab_v1",key)}catch(e){}$$(".tn button").forEach(function(b){b.setAttribute("aria-current",b.dataset.k===key)});
  ORDER.forEach(function(k){var on=k===key,t=$("#tab-"+k);t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1});
  showActive();refresh(state[key]);
 }
@@ -348,7 +348,7 @@ function wireImages(F_){F_.specs.forEach(function(s){if(s.type!=="imglink")retur
 function resetImages(F_){F_.specs.forEach(function(s){if(s.type==="imglink")imgSet(F_,s,wrapOf(F_,s),"link")})}
 
 /* ---------- Draft: answers are kept in this browser until the form is submitted or cleared ---------- */
-var DKEY="pi_onboarding_draft_v1_",DAYS=30,saveT={},lastKey="",pendingKey="";
+var DKEY="pin_onboarding_draft_v1_",DAYS=30,saveT={},lastKey="",pendingKey="";
 /* Drafts: answers are saved in this browser (localStorage) for 30 days, until submitted or cleared. Failures are ignored. */
 function draftSave(F_){try{var d={};F_.specs.forEach(function(s){var w=wrapOf(F_,s);
  d[s.id]=s.type==="imglink"?{m:s._mode||"link",v:get(F_,s),n:$(".fn",w).textContent}:get(F_,s)});
@@ -389,12 +389,12 @@ $("#cno").addEventListener("click",function(){closeDlg($("#clear"))});
 /* Clear everything and restart: business information, every channel form, saved drafts and the "submitted" marks. */
 function fullReset(){
  ORDER.forEach(function(k){resetForm(state[k])});resetForm(state.bi);
- submitted={};try{sessionStorage.removeItem("pi_onboarding_done_v1")}catch(e){}try{localStorage.removeItem("pi_onboarding_tab_v1")}catch(e){}
+ submitted={};try{sessionStorage.removeItem("pin_onboarding_done_v1")}catch(e){}try{localStorage.removeItem("pin_onboarding_tab_v1")}catch(e){}
  gate();select(ORDER[0]);paint();window.scrollTo({top:0,behavior:reduce?"auto":"smooth"})}
 $("#cyes").addEventListener("click",function(){var F_=state[pendingKey],m=pendingMode;closeDlg($("#clear"));if(!F_)return;
  if(m==="newbi"){fullReset();return}
  resetForm(F_);
- if(m==="another"){submitted[F_.key]=0;try{sessionStorage.setItem("pi_onboarding_done_v1",JSON.stringify(submitted))}catch(e){}paint()}
+ if(m==="another"){submitted[F_.key]=0;try{sessionStorage.setItem("pin_onboarding_done_v1",JSON.stringify(submitted))}catch(e){}paint()}
  if(F_.key==="bi")gate();F_.box.scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"})});
 $("#clear").addEventListener("click",function(e){if(e.target===this)closeDlg(this)});
 
@@ -501,7 +501,7 @@ function submit(F_,e){
  else send=withRetry(function(){return fetchT("https://docs.google.com/forms/d/e/"+FORM_IDS[F_.key]+"/formResponse",{method:"POST",mode:"no-cors",body:p})});
 
  send.then(function(){
-  busy(false);lastKey=F_.key;draftClear(F_.key);submitted[F_.key]=1;try{sessionStorage.setItem("pi_onboarding_done_v1",JSON.stringify(submitted))}catch(e){}
+  busy(false);lastKey=F_.key;draftClear(F_.key);submitted[F_.key]=1;try{sessionStorage.setItem("pin_onboarding_done_v1",JSON.stringify(submitted))}catch(e){}
   var rem=ORDER.filter(function(k){return!submitted[k]}).map(tabName),dn=$("#dnote");dn.hidden=!rem.length;dn.textContent=rem.length?T("done.also",{list:rem.join(T("list.sep"))}):"";paint();
   var dlg=$("#done");typeof dlg.showModal==="function"?dlg.showModal():dlg.setAttribute("open","");$("#ok").focus();
  }).catch(function(err){busy(false);console.error("[Onboarding] submit failed:",err);var em=(err&&err.message)||"",code=(em==="config"?"CFG":em.indexOf("srv:")===0?"SRV-"+em.slice(4).toUpperCase():err&&err.name==="AbortError"?"TIMEOUT":err&&err.name==="SyntaxError"?"RESP":"NET")+"-"+F_.key.toUpperCase();note.textContent=(!online()?T("err.offline"):err&&err.name==="AbortError"?T("err.timeout"):T("err.submit"))+T("err.ref",{code:code});note.classList.add("on");note.scrollIntoView({block:"center"})})
@@ -523,7 +523,7 @@ ORDER.forEach(build);
 ORDER.forEach(function(k){var F_=state[k],m=F_.specs.filter(function(s){return!F_.map[norm(s.title||s.label)]}).map(function(s){return s.label});
  Object.keys(BI_MAP[k]).forEach(function(id){var t=BI_MAP[k][id];if(t!=="emailAddress"&&!F_.map[norm(t)])m.push(t)});
  if(m.length&&!preview&&(CFG.TARGETS||{})[k]!=="sheet")console.warn("[Onboarding] "+k+" form: Google entry IDs missing for "+m.length+" field(s).",m)});
-var t0="whatsapp";try{var sv=localStorage.getItem("pi_onboarding_tab_v1");if(sv&&state[sv])t0=sv}catch(e){}
+var t0="whatsapp";try{var sv=localStorage.getItem("pin_onboarding_tab_v1");if(sv&&state[sv])t0=sv}catch(e){}
 select(t0);gate();if(unlocked)setBICollapsed(true,true);
 
 /* Connection state at load: show the offline banner, or warn when the browser reports a very slow link or data saver. */
@@ -547,7 +547,7 @@ document.querySelectorAll(".tn button").forEach(function(b){b.addEventListener("
  if(matchMedia("(prefers-reduced-motion: reduce)").matches){var v=document.querySelector(".scene");if(v&&v.pauseAnimations)v.pauseAnimations()}
 })();
 (function(){
- var KEY="pi_onboarding_welcome_seen_v1",seen=false;
+ var KEY="pin_onboarding_welcome_seen_v1",seen=false;
  try{seen=localStorage.getItem(KEY)==="1"}catch(e){}
  if(seen)return;
  var d=document.getElementById("welcome");if(!d)return;
