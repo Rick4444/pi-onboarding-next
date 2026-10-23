@@ -531,3 +531,67 @@ a.logo{color:inherit;text-decoration:none;cursor:pointer;border-radius:14px;tran
 a.logo:hover{transform:translateY(-1px);opacity:.92}
 a.logo:active{transform:scale(.98)}
 a.logo:focus-visible{outline:3px solid rgba(0,185,245,.7);outline-offset:4px}
+
+/* =====================================================================
+   THEME "AURORA LIGHT" (v-next)
+   A light, airy look: a slowly drifting aurora behind the header, glass cards, a gradient headline,
+   a floating night-blue Pi panel, glowing primary buttons and gentle reveal animations.
+   Everything below overrides the earlier dark theme, so it is safe to delete this whole section to go back.
+   ===================================================================== */
+:root{--aur1:#00b9f5;--aur2:#7c5cff;--aur3:#25d366;--aur4:#ffb547;--glass:rgba(255,255,255,.78);--edge:rgba(196,212,243,.85)}
+body{background:#f3f7ff}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 40% at 100% 100%,rgba(124,92,255,.07),transparent 70%),radial-gradient(50% 40% at 0 100%,rgba(0,185,245,.08),transparent 70%)}
+
+/* ---------- Header: light aurora ---------- */
+.band{background:#f1f6ff;animation:none;color:var(--ink);border-radius:0 0 44px 44px;padding-bottom:clamp(86px,9vw,120px)}
+.band::before{inset:-20%;opacity:1;-webkit-mask-image:none;mask-image:none;animation:aurora 22s ease-in-out infinite alternate;
+ background:radial-gradient(34% 42% at 14% 26%,rgba(0,185,245,.42),transparent 72%),radial-gradient(38% 46% at 86% 14%,rgba(124,92,255,.34),transparent 72%),radial-gradient(34% 40% at 72% 88%,rgba(37,211,102,.26),transparent 72%),radial-gradient(30% 40% at 28% 98%,rgba(255,181,71,.30),transparent 72%)}
+.band::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(0,46,110,.16) 1px,transparent 1.5px);background-size:34px 34px;opacity:.5;-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+@keyframes aurora{0%{transform:translate3d(-3%,-2%,0) rotate(0deg) scale(1)}50%{transform:translate3d(3%,2%,0) rotate(6deg) scale(1.08)}100%{transform:translate3d(-2%,4%,0) rotate(-5deg) scale(1.03)}}
+.bar{border-bottom:1px solid rgba(0,46,110,.1)}
+.by{color:#5b6b8c}.by b{color:var(--navy)}
+.tn{background:rgba(255,255,255,.7);border:1px solid var(--edge);box-shadow:0 8px 24px -14px rgba(0,46,110,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.tn button{color:#42557d}.tn button:hover{background:#e8f0ff;color:var(--navy)}
+.tn button[aria-current=true]{background:linear-gradient(135deg,#0b3d91,#1d5fd0);color:#fff;box-shadow:0 6px 16px -6px rgba(29,95,208,.7)}
+.langsel{color:var(--navy);border:1px solid var(--edge);background:rgba(255,255,255,.72) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%23002e6e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E") no-repeat right 12px center}
+.langsel:hover{background-color:#fff}.langsel:focus-visible{outline:2px solid var(--cyan)}
+.live{border:1px solid var(--edge);background:rgba(255,255,255,.75);color:var(--navy);box-shadow:0 6px 18px -10px rgba(0,46,110,.3)}
+.band h1{background:linear-gradient(100deg,#00205a 8%,#1d5fd0 52%,#00a8e8 96%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding-bottom:.08em}
+.band p{color:#3b4f7a}
+.eta{color:#5b6b8c!important}
+.hsteps li{background:rgba(255,255,255,.72);border:1px solid var(--edge);color:#3b4f7a;box-shadow:0 6px 16px -12px rgba(0,46,110,.35)}
+.hsteps li.cur{background:linear-gradient(135deg,#0b3d91,#1d5fd0);border-color:transparent;color:#fff;box-shadow:0 10px 22px -10px rgba(29,95,208,.8)}
+.hsteps li.done{background:#effaf4;border-color:#b9e5cf;color:#0b6b3b}
+
+/* hero entrance: items rise in one after another */
+.intro>*{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.intro>:nth-child(1){animation-delay:.05s}.intro>:nth-child(2){animation-delay:.15s}.intro>:nth-child(3){animation-delay:.25s}.intro>:nth-child(4){animation-delay:.35s}.intro>:nth-child(5){animation-delay:.45s}
+
+/* Pi panel: a night-blue glass tile that floats gently */
+.art{padding:16px;border-radius:38px;background:radial-gradient(120% 120% at 28% 18%,#1458d6 0%,#07286b 62%,#04163f 100%);box-shadow:0 36px 70px -26px rgba(4,22,63,.65),inset 0 0 0 1px rgba(255,255,255,.14);animation:floaty2 7s ease-in-out infinite}
+@keyframes floaty2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(.6deg)}}
+
+/* ---------- Cards, headings, fields ---------- */
+.card{background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--edge);border-radius:26px;box-shadow:0 1px 2px rgba(0,46,110,.04),0 22px 44px -22px rgba(0,46,110,.22)}
+.sec h3::before{width:5px;height:20px;border-radius:3px;background:linear-gradient(180deg,var(--aur1),var(--aur2))}
+.c{border:1.5px solid #cdd9f1;border-radius:14px;background:#fbfdff}
+.c:hover{border-color:#8fa8d4}.c:focus{border-color:var(--cyan);box-shadow:0 0 0 5px rgba(0,185,245,.16);background:#fff}
+.meter i{background:linear-gradient(90deg,var(--aur1),var(--aur2))}
+.stephead h2{background:linear-gradient(100deg,#00205a,#1d5fd0);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+
+/* ---------- Buttons and tabs ---------- */
+.submit:not([disabled]){background:linear-gradient(135deg,#0b3d91 0%,#1d5fd0 58%,#00a8e8 100%);border-radius:14px;box-shadow:0 14px 28px -12px rgba(29,95,208,.75)}
+.submit:not([disabled]):hover{background:linear-gradient(135deg,#0b3d91 0%,#2a6ee8 58%,#12b8f5 100%);box-shadow:0 18px 34px -12px rgba(29,95,208,.85)}
+.clear{border-radius:14px;border:1.5px solid #c2d1ee}
+.tabs{background:var(--glass);border:1px solid var(--edge);border-radius:20px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.tab{border-radius:14px}
+.tab[aria-selected=true]{background:linear-gradient(135deg,#0b3d91,#1d5fd0);border-color:transparent;box-shadow:0 12px 24px -10px rgba(29,95,208,.8);animation:tabPop .35s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes tabPop{from{transform:scale(.94)}to{transform:none}}
+.opt input:checked+span{background:linear-gradient(180deg,#f4f9ff,#e4efff)}
+
+/* ---------- Scroll reveal (class added by app.js; skipped for reduced motion) ---------- */
+.rv{opacity:0;transform:translateY(22px)}
+.rv.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+
+@media (max-width:760px){.band{border-radius:0 0 30px 30px}.art{padding:12px;border-radius:30px}}
+@media (prefers-reduced-motion:reduce){.band::before,.art,.intro>*,.tab[aria-selected=true]{animation:none}.rv,.rv.in{opacity:1;transform:none;transition:none}}
