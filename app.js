@@ -261,7 +261,7 @@ function syncSubmit(F_){
  var c=stat(F_),left=c.total-c.done,off=!online();btn.disabled=left>0||off;
  var n=$(".need",F_.el);if(n)n.textContent=left>0?T(left===1?"need.one":"need.other",{n:left}):off?T("need.offline"):T("need.ready")}
 var biCollapsed=false;
-function updateSummary(){var B=state.bi,g=function(id){return get(B,B.by[id])};$("#bisum").innerHTML=[g("co"),g("pc")?T("bi.summary.spoc",{name:g("pc")}):"",g("email"),g("mob")].filter(Boolean).map(function(x){return"<span>"+esc(x)+"</span>"}).join("")}
+function updateSummary(){var B=state.bi,g=function(id){return get(B,B.by[id])};var sm=[g("co"),g("pc")?T("bi.summary.spoc",{name:g("pc")}):"",g("email"),g("mob")].filter(Boolean).map(function(x){return"<span>"+esc(x)+"</span>"}).join("");$("#bisum").innerHTML=sm||"<span>"+esc(T("bi.summary.empty"))+"</span>"}
 /* Collapses or expands the business information card (it collapses after Continue). */
 function setBICollapsed(on,instant){
  var h=$("#bi"),f=$("#bi-form"),t=$("#bi-toggle");if(!h||!f)return;if(instant)h.classList.add("noanim");
@@ -541,6 +541,15 @@ if(CFG.SERVICE_WORKER!==false&&"serviceWorker" in navigator&&location.protocol==
 "use strict";
 var LOGO_SRC=(window.PI_CONFIG&&window.PI_CONFIG.LOGO_SRC)||"";
 document.querySelectorAll(".tn button").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById("tab-"+b.dataset.k);if(t.getAttribute("aria-disabled")==="true"){document.dispatchEvent(new Event("pi:needbi"));return}t.click();document.getElementById("tabs").scrollIntoView({behavior:"smooth",block:"center"})})});
+/* Gentle scroll reveal: main cards fade and rise into view once. Skipped for reduced motion or old browsers. */
+(function(){
+ if(!("IntersectionObserver" in window)||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ var els=document.querySelectorAll(".col>.card,.col>.stephead,.col>.tabs,aside>.card");if(!els.length)return;
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.08,rootMargin:"0px 0px -6% 0px"});
+ els.forEach(function(el){el.classList.add("rv");io.observe(el)});
+ /* safety: never leave anything hidden if the observer is slow */
+ setTimeout(function(){els.forEach(function(el){el.classList.add("in")})},2500);
+})();
 (function(){
  var l=document.getElementById("logo");
  if(LOGO_SRC){var i=new Image();i.alt=window.PI_T("logo.alt");i.onload=function(){l.removeAttribute("role");l.removeAttribute("aria-label");l.innerHTML="";l.appendChild(i)};i.src=LOGO_SRC}
