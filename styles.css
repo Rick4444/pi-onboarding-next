@@ -799,3 +799,7 @@ html{font-size:93.75%}
  .rail .art{width:min(100%,225px);margin-top:10px}
  .rail .rhelp{margin-top:8px;font-size:.76rem}
 }
+
+/* v-n6: the Pi graphic never waits on an entrance animation, so it is visible the moment the page loads */
+.rail .art{opacity:1!important;transform:none!important;animation:none!important}
+.bld{display:block;margin-top:6px;color:rgba(255,255,255,.35);font-size:.68rem;letter-spacing:.06em}
